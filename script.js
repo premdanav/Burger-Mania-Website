@@ -29,12 +29,17 @@ function createCardHTML({ id, name, price, type, url }) {
       <p>Type: ${type}</p>
       <label for="quantity${id}">Quantity:</label>
       <select id="quantity${id}">
-        ${Array.from(
-          { length: 9 },
-          (_, i) => `<option value="${i + 1}">${i + 1}</option>`
-        ).join("")}
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+    <option value="6">6</option>
+    <option value="7">7</option>
+    <option value="8">8</option>
+    <option value="9">9</option>
       </select>
-      <button class="cart-icon" data-product-id="${id}">Add to Cart</button>
+      <button class="cart-icon" id='cart-btn' data-product-id="${id}">Add to Cart</button>
     </div>`;
 }
 
@@ -56,7 +61,7 @@ function createCard(product, imageSrc, onClick) {
 
   // Add event listener to the button
   const button = card.querySelector(".cart-icon");
-  button.addEventListener("click", () => onClick(product.id));
+  button.addEventListener("click", () => addToCart(product.id));
 
   return card;
 }
