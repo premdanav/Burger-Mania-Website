@@ -1,0 +1,168 @@
+[
+  {
+    "id": 1,
+    "name": "PAneer Tikki Burger",
+    "price": 300,
+    "category": "Burger",
+    "type": "Veg",
+    "url": "https://www.jumboking.co.in/wp-content/uploads/2023/01/Zomato_Corn-Spinach-Burger-450x450.webp"
+  },
+  {
+    "id": 2,
+    "name": "Aloo Tikki Burger",
+    "price": 250,
+    "category": "Burger",
+    "type": "Veg",
+    "url": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnVyZ2VyfGVufDB8fDB8fHww"
+  },
+  {
+    "id": 3,
+    "name": "Veggie Delight Burger",
+    "price": 350,
+    "category": "Burger",
+    "type": "Veg",
+    "url": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "id": 4,
+    "name": "Chicken Burger",
+    "price": 350,
+    "category": "Burger",
+    "type": "Non-veg",
+    "url": "https://images.unsplash.com/photo-1606149059549-6042addafc5a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "id": 5,
+    "name": "Fish Fillet Burger",
+    "price": 400,
+    "category": "Burger",
+    "type": "Non-veg",
+    "url": "https://images.unsplash.com/photo-1615297928064-24977384d0da?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "id": 6,
+    "name": "Beef Burger",
+    "price": 450,
+    "category": "Burger",
+    "type": "Non-veg",
+    "url": "https://www.eatthis.com/wp-content/uploads/sites/4//media/images/ext/520765216/classic-beef-burger.jpg?quality=82&strip=1&w=640"
+  },
+  {
+    "id": 7,
+    "name": "Classic Fries",
+    "price": 150,
+    "category": "Fries",
+    "type": "Fries",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBpo8ZLs96CV51XRz0jwrUUHIMf9JHakGGiQ&usqp=CAU"
+  },
+  {
+    "id": 8,
+    "name": "Cheese Fries",
+    "price": 200,
+    "category": "Fries",
+    "type": "Fries",
+    "url": "https://www.thegunnysack.com/wp-content/uploads/2022/11/Cheese-Fries-Topdown.jpg"
+  },
+  {
+    "id": 9,
+    "name": "Regular Coke",
+    "price": 100,
+    "category": "Coke",
+    "type": "Coke",
+    "url": "https://www.express-foodservice.co.uk/media/catalog/product/cache/6db96392ee0fff21de84d250f8390dfd/1/0/1088339237.jpg"
+  },
+  {
+    "id": 10,
+    "name": "Diet Coke",
+    "price": 120,
+    "category": "Coke",
+    "type": "Coke",
+    "url": "https://4.imimg.com/data4/QB/WX/MY-1850306/coca-cola-diet-coke.jpg"
+  },
+  {
+    "id": 11,
+    "name": "Panner Coke Meal",
+    "price": 500,
+    "category": "Meal",
+    "type": "Meal",
+    "products": [1, 9],
+    "url": "https://www.jumboking.co.in/wp-content/uploads/2023/01/Zomato_Mac-Cheese-Burger-Coke-450x450.webp"
+  },
+  {
+    "id": 12,
+    "name": "Chicken Burger And Classic Fries Meal",
+    "price": 600,
+    "category": "Meal",
+    "type": "Meal",
+    "products": [4, 7],
+    "url": "https://media-cdn.tripadvisor.com/media/photo-s/15/af/56/a8/mel-s-drive-in.jpg"
+  },
+  {
+    "id": 13,
+    "name": "Aloo Tikki Burger And Cheese Fries Meal",
+    "price": 660,
+    "category": "Meal",
+    "type": "Meal",
+    "products": [2, 8],
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT80_AnpFVd6hQkyJlhU_g2029TsRVZZ4InFA&usqp=CAU"
+  },
+  {
+    "id": 14,
+    "name": "Veggie Delight Burger And Coke Meal",
+    "price": 600,
+    "category": "Meal",
+    "type": "Meal",
+    "products": [3, 9],
+    "url": "https://dsgifting.com/wp-content/uploads/2023/02/a1-4.png"
+  },
+  {
+    "id": 15,
+    "name": "Fries And Coke Meal",
+    "price": 600,
+    "category": "Meal",
+    "type": "Meal",
+    "products": [7, 9],
+    "url": "https://www.shutterstock.com/image-photo/cola-french-fries-isolated-on-600nw-173983133.jpg"
+  },
+  {
+    "id": 16,
+    "name": "Fish Fillet Burger And Fries",
+    "price": 600,
+    "category": "Meal",
+    "type": "Meal",
+    "products": [5, 7],
+    "url": "https://c8.alamy.com/comp/J4B1FF/fish-burger-fish-fingers-in-a-burger-bun-with-french-fries-on-a-plate-J4B1FF.jpg"
+  },
+  {
+    "id": 17,
+    "name": "Hot Veg BUrger",
+    "price": 300,
+    "category": "Burger",
+    "type": "Veg",
+    "url": "https://www.vegrecipesofindia.com/wp-content/uploads/2020/12/burger-recipe-1-500x500.jpg"
+  },
+  {
+    "id": 18,
+    "name": "Veggie Rich Burger",
+    "price": 600,
+    "category": "Burger",
+    "type": "Veg",
+    "url": "https://www.indianhealthyrecipes.com/wp-content/uploads/2016/02/veggie-burger-recipe-20.jpg.webp"
+  },
+  {
+    "id": 19,
+    "name": "Devils Chiken Burger",
+    "price": 600,
+    "category": "Burger",
+    "type": "Non-veg",
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS42gp6Ml77Lm5FIvsKqiWmznXOD_8U8erRYTdLArsNRjJf9VMFLXKFBQGOgfHP_smhPaY&usqp=CAU"
+  },
+  {
+    "id": 20,
+    "name": "Fire Chiken Burger",
+    "price": 600,
+    "category": "Burger",
+    "type": "Non-veg",
+    "url": "https://img.freepik.com/premium-photo/delicious-spicy-fried-chicken-burger-ads-with-burning-fire-dark-background_226766-29.jpg"
+  }
+]
