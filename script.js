@@ -1,6 +1,10 @@
 let products = [];
 let meals = [];
 let cart = [];
+
+let billForRegularItems = [];
+let billForMeals = [];
+
 //fetching products from json file
 async function fetchProducts() {
   try {
@@ -18,7 +22,7 @@ async function fetchProducts() {
 //displaying the products
 async function display() {
   await fetchProducts();
-  addProducts("All");
+  addProducts("All", "");
 }
 
 //display only when doucment is loaded
@@ -133,6 +137,12 @@ function addToCart(productData) {
   let cartItem;
   if (type === "Meal") {
     const meal = meals.find((p) => p.id === id);
+
+    const productsComboFromMeal = meal.products;
+    billForMeals.push(productsComboFromMeal);
+
+    // console.log(productsComboFromMeal);
+
     cartItem = {
       id: meal.id,
       name: meal.name,
@@ -141,6 +151,9 @@ function addToCart(productData) {
     };
   } else {
     const product = products.find((p) => p.id === id);
+
+    billForRegularItems.push(product.id);
+
     cartItem = {
       id: product.id,
       name: product.name,
@@ -150,7 +163,9 @@ function addToCart(productData) {
   }
 
   cart.push(cartItem);
+  alert("Item Added to the Cart");
   updateCart();
+  document.querySelector("#delete-btn").classList.remove("hidden");
 }
 
 //update cart items
@@ -169,6 +184,7 @@ function updateCart() {
   });
 }
 
+//remove checkout after generating bill
 function checkout() {
   document.getElementById("checkout").classList.remove("hidden");
 }
@@ -179,15 +195,15 @@ function getBill() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
 
-  const regularBill = calculateActualBill();
+  const regularBill = calculateRegularBill();
   const discountedBill = calculateDiscountedBill();
 
   // Display bills
   document.getElementById("regular-bill").innerHTML = `
-    <h3>Actual Bill for ${name} and ${email}</h3>
+    <h3>Regular Bill for ${name} and ${email}</h3>
     ${regularBill}`;
   document.getElementById("discounted-bill").innerHTML = `
-    <h3>Optimized Bill for ${name} and ${email}</h3>
+    <h3>Discounted Bill for ${name} and ${email}</h3>
     ${discountedBill}`;
 
   document.getElementById("checkout").classList.add("hidden");
@@ -200,16 +216,60 @@ function getBill() {
 
 document.getElementById("generate-bill-btn").addEventListener("click", getBill);
 
-function calculateActualBill() {
+//calculate regular bill
+function calculateRegularBill() {
   let total = 0;
   cart.forEach((item) => {
     total += item.price * item.quantity;
   });
-  return `Total: $${total.toFixed(2)}`;
+  return `Total: $${total}`;
 }
 
+//getMealPriceFromComboProducts
+function getMealPriceFromComboProducts(arrOfProducts) {
+  let price = 0;
+
+  meals.filter((element) => {
+    if (
+      element.products[0] === arrOfProducts[0] &&
+      element.products[1] === arrOfProducts[1]
+    ) {
+      price = element.price;
+      return price;
+    }
+  });
+  return price;
+}
+let mealsProductsArr = [];
+//calculate discounted bill
 function calculateDiscountedBill() {
-  console.log("discounted bill");
+  console.log(billForRegularItems);
+  let total = 0;
+  let price = 0;
+  let cartQuantity = 0;
+
+  meals.forEach((meal) => {
+    mealsProductsArr.push(meal.products);
+  });
+  // console.log(mealsProductsArr);
+
+  for (let i = 0; i < mealsProductsArr.length - 1; i++) {
+    for (let j = 0; j < billForRegularItems.length; j++) {
+      if (
+        billForRegularItems[i] === mealsProductsArr[j][i] &&
+        billForRegularItems[i + 1] === mealsProductsArr[j][i + 1]
+      ) {
+        price = getMealPriceFromComboProducts(mealsProductsArr[j]);
+      }
+    }
+  }
+  console.log(price);
+  cart.forEach((item) => {
+    cartQuantity += item.quantity;
+  });
+
+  total += price;
+  return `Total: $${total}`;
 }
 
 addProducts();

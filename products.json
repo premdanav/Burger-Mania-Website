@@ -2,7 +2,7 @@
   {
     "id": 1,
     "name": "PAneer Tikki Burger",
-    "price": 300,
+    "price": 200,
     "category": "Burger",
     "type": "Veg",
     "url": "https://www.jumboking.co.in/wp-content/uploads/2023/01/Zomato_Corn-Spinach-Burger-450x450.webp"
@@ -10,7 +10,7 @@
   {
     "id": 2,
     "name": "Aloo Tikki Burger",
-    "price": 250,
+    "price": 150,
     "category": "Burger",
     "type": "Veg",
     "url": "https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8YnVyZ2VyfGVufDB8fDB8fHww"
@@ -18,7 +18,7 @@
   {
     "id": 3,
     "name": "Veggie Delight Burger",
-    "price": 350,
+    "price": 250,
     "category": "Burger",
     "type": "Veg",
     "url": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -26,7 +26,7 @@
   {
     "id": 4,
     "name": "Chicken Burger",
-    "price": 350,
+    "price": 300,
     "category": "Burger",
     "type": "Non-veg",
     "url": "https://images.unsplash.com/photo-1606149059549-6042addafc5a?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -34,14 +34,14 @@
   {
     "id": 5,
     "name": "Fish Fillet Burger",
-    "price": 400,
+    "price": 250,
     "category": "Burger",
     "type": "Non-veg",
     "url": "https://images.unsplash.com/photo-1615297928064-24977384d0da?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   },
   {
     "id": 6,
-    "name": "Beef Burger",
+    "name": "Mutton Burger",
     "price": 450,
     "category": "Burger",
     "type": "Non-veg",
@@ -50,7 +50,7 @@
   {
     "id": 7,
     "name": "Classic Fries",
-    "price": 150,
+    "price": 100,
     "category": "Fries",
     "type": "Fries",
     "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBpo8ZLs96CV51XRz0jwrUUHIMf9JHakGGiQ&usqp=CAU"
@@ -81,8 +81,8 @@
   },
   {
     "id": 11,
-    "name": "Panner Coke Meal",
-    "price": 500,
+    "name": "Panner Tikki BUrger And Coke Meal",
+    "price": 250,
     "category": "Meal",
     "type": "Meal",
     "products": [1, 9],
@@ -91,7 +91,7 @@
   {
     "id": 12,
     "name": "Chicken Burger And Classic Fries Meal",
-    "price": 600,
+    "price": 450,
     "category": "Meal",
     "type": "Meal",
     "products": [4, 7],
@@ -100,7 +100,7 @@
   {
     "id": 13,
     "name": "Aloo Tikki Burger And Cheese Fries Meal",
-    "price": 660,
+    "price": 300,
     "category": "Meal",
     "type": "Meal",
     "products": [2, 8],
@@ -109,7 +109,7 @@
   {
     "id": 14,
     "name": "Veggie Delight Burger And Coke Meal",
-    "price": 600,
+    "price": 280,
     "category": "Meal",
     "type": "Meal",
     "products": [3, 9],
@@ -118,7 +118,7 @@
   {
     "id": 15,
     "name": "Fries And Coke Meal",
-    "price": 600,
+    "price": 150,
     "category": "Meal",
     "type": "Meal",
     "products": [7, 9],
@@ -127,11 +127,11 @@
   {
     "id": 16,
     "name": "Fish Fillet Burger And Fries",
-    "price": 600,
+    "price": 300,
     "category": "Meal",
     "type": "Meal",
     "products": [5, 7],
-    "url": "https://c8.alamy.com/comp/J4B1FF/fish-burger-fish-fingers-in-a-burger-bun-with-french-fries-on-a-plate-J4B1FF.jpg"
+    "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1YJ-nOzLBlElNZEurAKNnNJyI4cUob0O02n599A6yg1J-MDoZMEZz_AjLwWYr9u0o-Eg&usqp=CAU"
   },
   {
     "id": 17,
