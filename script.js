@@ -1,5 +1,7 @@
 let products = [];
 let meals = [];
+let cart = [];
+//fetching products from json file
 async function fetchProducts() {
   try {
     const results = await fetch("products.json");
@@ -13,14 +15,18 @@ async function fetchProducts() {
   }
 }
 
+//displaying the products
 async function display() {
   await fetchProducts();
   addProducts("All");
 }
 
+//display only when doucment is loaded
 document.addEventListener("DOMContentLoaded", display);
 
-function createCardHTML({ id, name, price, type, url }) {
+//creating hmtl for meals and products
+function createCardHtml(product) {
+  let { id, name, price, type, url } = product;
   return `
     <img class="product-image" src="${url}" alt="${name}" />
     <div class="product-details">
@@ -42,34 +48,36 @@ function createCardHTML({ id, name, price, type, url }) {
       <button class="cart-icon" id='cart-btn' data-product-id="${id}">Add to Cart</button>
     </div>`;
 }
-
-// Function to create a product card
-function createProductCard(product) {
-  return createCard(product, addToCart);
-}
-
-// Function to create a meal card
-function createMealCard(meal) {
-  return createCard(meal, addToCart);
-}
-
-// Function to create a card with common structure
-function createCard(product, imageSrc, onClick) {
+//create cart
+function createCard(product) {
   const card = document.createElement("div");
   card.className = "product-card";
-  card.innerHTML = createCardHTML(product, imageSrc);
+  card.innerHTML = createCardHtml(product);
 
   // Add event listener to the button
   const button = card.querySelector(".cart-icon");
-  button.addEventListener("click", () => addToCart(product.id));
+
+  button.addEventListener("click", () => addToCart(product));
 
   return card;
 }
 
+// create a product card
+function createProductCard(product) {
+  return createCard(product);
+}
+
+//  create a meal card
+function createMealCard(meal) {
+  return createCard(meal);
+}
+
+//add product on ui
 function addProducts(filterCategory, searchTerm) {
   const productDiv = document.querySelector("#products");
   productDiv.innerHTML = "";
 
+  //filtered and searched the products
   products
     .filter((element) => {
       const matchesCategory =
@@ -85,6 +93,7 @@ function addProducts(filterCategory, searchTerm) {
       productDiv.appendChild(productCard);
     });
 
+  //filtered and searched meals
   meals
     .filter((meal) => {
       const matchesCategory =
@@ -101,14 +110,13 @@ function addProducts(filterCategory, searchTerm) {
     });
 }
 
-// Modify the onCategoryChange function to include the search term
+//when category chagnes
 function onCategoryChange() {
   const selectedCategory = document.getElementById("c-filter").value;
   const searchTerm = document.getElementById("search-bar").value;
   addProducts(selectedCategory, searchTerm);
 }
 
-// Add an event listener for the search bar
 document
   .getElementById("search-bar")
   .addEventListener("input", onCategoryChange);
@@ -117,30 +125,46 @@ document
   .getElementById("c-filter")
   .addEventListener("change", onCategoryChange);
 
-function addToCart(productId) {
-  const quantity = document.getElementById(`quantity${productId}`).value;
-  const product = products.find((p) => p.id === productId);
-
-  const cartItem = {
-    id: productId,
-    name: product.name,
-    price: product.price,
-    quantity: parseInt(quantity),
-  };
+//add to cart
+function addToCart(productData) {
+  console.log(productData);
+  let { id, type } = productData;
+  const quantity = document.getElementById(`quantity${id}`).value;
+  let cartItem;
+  if (type === "Meal") {
+    const meal = meals.find((p) => p.id === id);
+    cartItem = {
+      id: meal.id,
+      name: meal.name,
+      price: meal.price,
+      quantity: parseInt(quantity),
+    };
+  } else {
+    const product = products.find((p) => p.id === id);
+    cartItem = {
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: parseInt(quantity),
+    };
+  }
 
   cart.push(cartItem);
   updateCart();
 }
 
+//update cart items
 function updateCart() {
   const cartList = document.getElementById("cart-list");
   cartList.innerHTML = "";
 
   cart.forEach((item) => {
     const listItem = document.createElement("li");
-    listItem.textContent = `${item.quantity}x ${item.name} - $${(
-      item.price * item.quantity
-    ).toFixed(2)}`;
+    const text = document.createTextNode(
+      `${item.quantity} - ${item.name} = ${item.price * item.quantity} ₹`
+    );
+    listItem.appendChild(text);
+
     cartList.appendChild(listItem);
   });
 }
@@ -151,23 +175,21 @@ function checkout() {
 
 document.querySelector("#checkout-btn").addEventListener("click", checkout);
 
-function generateBill() {
+function getBill() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
 
-  // Calculate actual and optimized bills
-  const actualBill = calculateActualBill();
-  const optimizedBill = calculateOptimizedBill();
+  const regularBill = calculateActualBill();
+  const discountedBill = calculateDiscountedBill();
 
   // Display bills
-  document.getElementById("actual-bill").innerHTML = `
-    <h3>Actual Bill for ${name} (${email})</h3>
-    ${actualBill}`;
-  document.getElementById("optimized-bill").innerHTML = `
-    <h3>Optimized Bill for ${name} (${email})</h3>
-    ${optimizedBill}`;
+  document.getElementById("regular-bill").innerHTML = `
+    <h3>Actual Bill for ${name} and ${email}</h3>
+    ${regularBill}`;
+  document.getElementById("discounted-bill").innerHTML = `
+    <h3>Optimized Bill for ${name} and ${email}</h3>
+    ${discountedBill}`;
 
-  // Hide checkout and show bill
   document.getElementById("checkout").classList.add("hidden");
   document.getElementById("bill").classList.remove("hidden");
 
@@ -176,9 +198,7 @@ function generateBill() {
   updateCart();
 }
 
-document
-  .getElementById("generate-bill-btn")
-  .addEventListener("click", generateBill);
+document.getElementById("generate-bill-btn").addEventListener("click", getBill);
 
 function calculateActualBill() {
   let total = 0;
@@ -188,17 +208,8 @@ function calculateActualBill() {
   return `Total: $${total.toFixed(2)}`;
 }
 
-function calculateOptimizedBill() {
-  let total = 0;
-  cart.forEach((item) => {
-    total += item.price * item.quantity;
-  });
-  const discount = total * 0.1;
-  const optimizedTotal = total - discount;
-
-  return `Total with 10% discount: $${optimizedTotal.toFixed(2)}`;
+function calculateDiscountedBill() {
+  console.log("discounted bill");
 }
-
-let cart = [];
 
 addProducts();

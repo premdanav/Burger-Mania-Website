@@ -47,28 +47,32 @@
       <div id="cart">
         <h2>Shopping Cart</h2>
         <ul id="cart-list"></ul>
-        <button id="checkout-btn">Checkout</button>
+        <button id="checkout-btn"><strong>Checkout</strong></button>
       </div>
 
       <!-- checkout  section -->
       <div id="checkout" class="hidden">
         <h2>Checkout</h2>
         <form id="checkout-form">
-          <label for="name">Name:</label>
+          <label for="name"><strong>Name:</strong></label>
           <input type="text" id="name" required />
           <br />
-          <label for="email">Email:</label>
+          <br />
+          <label for="email"><strong>Email:</strong></label>
           <input type="email" id="email" required />
           <br />
-          <button type="button" id="generate-bill-btn">Generate Bill</button>
+          <br />
+          <button type="button" id="generate-bill-btn">
+            <strong>Generate Bill</strong>
+          </button>
         </form>
       </div>
 
       <!-- bill section -->
       <div id="bill" class="hidden">
         <h2>Bill</h2>
-        <div id="actual-bill"></div>
-        <div id="optimized-bill"></div>
+        <div id="regular-bill"></div>
+        <div id="discounted-bill"></div>
       </div>
     </div>
 
