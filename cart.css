@@ -48,13 +48,23 @@ body {
 }
 
 #checkout-btn:hover,
-#delete-btn:hover,
 #generate-bill-btn:hover {
   background-color: #0056b3;
 }
 
+#home-page {
+  background-color: green;
+}
+
+#delete-btn:hover {
+  background-color: red;
+}
 .hidden {
   display: none;
+}
+
+.show {
+  display: block;
 }
 
 #checkout,

@@ -1,29 +1,27 @@
 let cart = JSON.parse(window.localStorage.getItem("cart"));
-
-let [burgerCounter, cokeCounter, friesCounter] = JSON.parse(
-  window.localStorage.getItem("counterArray")
-) || [0, 0, 0];
-
-let counterArray = [];
-
-console.log(`burger counter =${burgerCounter}`);
-console.log(`coke counter =${cokeCounter}`);
-console.log(`fries counter =${friesCounter}`);
-
 let finalAmount = 0;
-
-console.log(cart);
 let meals = JSON.parse(window.localStorage.getItem("meals"));
-console.log(meals);
+document.querySelector("#delete-btn").classList.remove("hidden");
 
+// listener for delete-btn
 document
   .querySelector("#delete-btn")
   .addEventListener("click", delteLastItemFromCart);
 
+// listener for checkout-btn
+document.querySelector("#checkout-btn").addEventListener("click", checkout);
+
+//listener for generate-bill-btn
+document.querySelector("#generate-bill-btn").addEventListener("click", getBill);
+
+//listener for home-page
+document.getElementById("home-page").addEventListener("click", goToHomePage);
+
+//delete the last item from the cart
 function delteLastItemFromCart() {
   if (cart.length === 0) {
     alert("Cart is empty");
-    document.querySelector("#delete-btn").classList.remove("hidden");
+    window.location.href = "index.html";
   }
 
   console.log(cart);
@@ -31,24 +29,39 @@ function delteLastItemFromCart() {
   updateCart();
 }
 
+//checkout
 function checkout() {
   document.getElementById("checkout").classList.remove("hidden");
+  if (cart.length === 0) {
+    alert("Cart is empty");
+    window.location.href = "index.html";
+  }
 }
 
-document.querySelector("#checkout-btn").addEventListener("click", checkout);
-
-//function get bill
+//getbill
 function getBill() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
 
   const regularBill = calculateRegularBill();
+  console.log(`regular bill ${regularBill}`);
   const discountedBill = calculateDiscountedBill(regularBill);
+  console.log(`discounted bill ${discountedBill}`);
 
   document.getElementById("regular-bill").innerHTML = `
         <h3>Regular Bill for ${name} and ${email}</h3>Total Bill : 
         ${regularBill}`;
+
+  //no discount
+  if (regularBill === discountedBill) {
+    document.getElementById("discounted-bill").innerHTML = `
+        <h3>Discounted Bill for ${name} and ${email}</h3>
+        ${discountedBill}`;
+  }
+
+  //discount
   document.getElementById("discounted-bill").innerHTML = `
+        <h2>Congrats You Got Discount<h2>
         <h3>Discounted Bill for ${name} and ${email}</h3>
         ${discountedBill}`;
 
@@ -57,12 +70,9 @@ function getBill() {
 
   cart = [];
   updateCart();
-
-  document.getElementById("home-page").addEventListener("click", goToHomePage);
 }
 
-document.querySelector("#generate-bill-btn").addEventListener("click", getBill);
-
+// home page function
 function goToHomePage() {
   // displayRazorPay(finalAmount);
   document.getElementById("bill").classList.add("hidden");
@@ -75,6 +85,7 @@ function goToHomePage() {
   }, 2000);
 }
 
+// regular bill
 function calculateRegularBill() {
   let total = 0;
   cart.forEach((item) => {
@@ -85,18 +96,19 @@ function calculateRegularBill() {
   return total;
 }
 
+// optimised bill
 function calculateDiscountedBill(regularBill) {
   let totalDiscount = 0;
 
   for (let meal of meals) {
     let productIds = meal.products;
-    console.log("product ids" + productIds);
+    console.log("Product IDs: " + productIds);
     let mealCount = getMealCount(productIds);
-    console.log(`mela cout==${mealCount}`);
+    console.log(`Meal count == ${mealCount}`);
 
     if (mealCount > 0) {
       totalDiscount = regularBill - 150 * mealCount;
-      console.log(`total disc=${totalDiscount}`);
+      console.log(`Total discount = ${totalDiscount}`);
     }
   }
 
@@ -106,96 +118,48 @@ function calculateDiscountedBill(regularBill) {
     });
   }
 
+  finalAmount = totalDiscount;
   return `Discounted Total: ${totalDiscount}`;
 }
 
+// count of meals we occured
 function getMealCount(productIds) {
   let count = Infinity;
 
   for (let id of productIds) {
     let item = cart.find((product) => product.id === id);
-    console.log(`item is ${item}`);
+    console.log(`Item is ${item}`);
     if (!item) {
       count = 0;
       break;
     }
-
+    //taking minimum count
     count = Math.min(count, item.quantity);
-    console.log(`count=${count}`);
+    console.log(`Count = ${count}`);
   }
 
   return count;
 }
 
-// function checkInMeals(item1, item2) {
-//   console.log(`item1 is ${item1.id} and item2 is ${item2.id}`);
-//   let foundAndPrice = [false, 0];
-
-//   let meal;
-//   for (let i = 0; i < mealStack.length; i++) {
-//     let productsArrInMeals = mealStack[i].products;
-//     console.log(productsArrInMeals);
-//     if (
-//       productsArrInMeals.includes(item1.id) &&
-//       productsArrInMeals.includes(item2.id)
-//     ) {
-//       meal = mealStack[i];
-//       break;
-//     }
-//   }
-//   console.log(meal);
-
-//   if (meal) {
-//     console.log(meal);
-//     foundAndPrice[0] = true;
-//     foundAndPrice[1] = meal.price;
-//   }
-//   return foundAndPrice;
-// }
-
-//increase
+// increase quantity
 function increaseQuantity(itemId) {
   const item = cart.find((item) => item.id === itemId);
   if (item) {
     item.quantity += 1;
-    if (item.category === "Burger") {
-      burgerCounter++;
-    } else if (item.category === "Coke") {
-      cokeCounter++;
-    } else if (item.category === "Fries") {
-      friesCounter++;
-    }
-    counterArray = [burgerCounter, cokeCounter, friesCounter];
-
-    console.log(`burger counter in increse=${burgerCounter}`);
-    console.log(`coke counter in increase=${cokeCounter}`);
-    console.log(`fries counter in increase=${friesCounter}`);
     updateCart();
   }
 }
 
-//decrease
+// decrease quantity
 function decreaseQuantity(itemId, count = 1) {
   const item = cart.find((item) => item.id === itemId);
   if (item && item.quantity > 1) {
     item.quantity -= count;
-    if (item.category === "Burger") {
-      burgerCounter--;
-    } else if (item.category === "Coke") {
-      cokeCounter--;
-    } else if (item.category === "Fries") {
-      friesCounter--;
-    }
-    counterArray = [burgerCounter, cokeCounter, friesCounter];
-
-    console.log(`burger counter in decrease=${burgerCounter}`);
-    console.log(`coke counter in decrease=${cokeCounter}`);
-    console.log(`fries counter in decrease=${friesCounter}`);
     updateCart();
   }
 }
 
-//update cart
+// update the cart
 function updateCart() {
   const cartList = document.getElementById("cart-list");
   cartList.innerHTML = "";
@@ -203,10 +167,12 @@ function updateCart() {
   cart.forEach((item) => {
     const listItem = document.createElement("li");
 
+    //increase button
     const increaseButton = document.createElement("button");
     increaseButton.innerText = "+";
     increaseButton.addEventListener("click", () => increaseQuantity(item.id));
 
+    //decrease button
     const decreaseButton = document.createElement("button");
     decreaseButton.innerText = "-";
     decreaseButton.addEventListener("click", () => decreaseQuantity(item.id));
@@ -226,13 +192,11 @@ function updateCart() {
   });
 
   window.localStorage.setItem("cart", JSON.stringify(cart));
-
-  counterArray = [burgerCounter, cokeCounter, friesCounter];
-  window.localStorage.setItem("counterArray", JSON.stringify(counterArray));
 }
 
 updateCart();
 
+// load script
 function loadScript(src) {
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
@@ -244,6 +208,7 @@ function loadScript(src) {
   });
 }
 
+// RazorPay paymnet gateway
 const displayRazorPay = async (amount) => {
   try {
     const res = await loadScript(
@@ -273,7 +238,7 @@ const displayRazorPay = async (amount) => {
             "Content-Type": "application/json",
           },
         }).then((result) => {
-          console.log("result", result);
+          console.log("Result", result);
           result.json().then((res) => {
             console.log(res);
           });
