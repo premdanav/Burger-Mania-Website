@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "PAneer Tikki Burger",
+    "name": "Paneer Tikki Burger",
     "price": 200,
     "category": "Burger",
     "type": "Veg",
@@ -21,7 +21,7 @@
     "price": 250,
     "category": "Burger",
     "type": "Veg",
-    "url": "https://images.unsplash.com/photo-1572802419224-296b0aeee0d9?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    "url": "https://c8.alamy.com/comp/RG7135/veggie-burger-made-from-fresh-vegetables-greens-on-a-blue-background-the-concept-of-a-healthy-diet-keto-diet-close-up-RG7135.jpg"
   },
   {
     "id": 4,
@@ -81,7 +81,7 @@
   },
   {
     "id": 11,
-    "name": "Panner Tikki BUrger And Coke Meal",
+    "name": "Paneer Tikki Burger And Regular Coke Meal",
     "price": 250,
     "category": "Meal",
     "type": "Meal",

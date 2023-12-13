@@ -1,0 +1,77 @@
+body {
+  background-image: url("https://media1.tenor.com/m/g6lCLU0cQZcAAAAC/badabing-burger-sallad.gif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+#cart {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#cart h2 {
+  color: #333;
+}
+
+#cart-list {
+  list-style: none;
+  padding: 0;
+}
+
+#cart-list li {
+  border-bottom: 1px solid #ddd;
+  padding: 10px 0;
+}
+
+#checkout-btn,
+#delete-btn,
+#generate-bill-btn,
+#home-page {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 10px;
+  justify-content: center;
+}
+
+#checkout-btn:hover,
+#delete-btn:hover,
+#generate-bill-btn:hover {
+  background-color: #0056b3;
+}
+
+.hidden {
+  display: none;
+}
+
+#checkout,
+#bill {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+#checkout h2,
+#bill h2 {
+  color: #333;
+}

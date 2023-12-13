@@ -1,29 +1,37 @@
 let products = [];
 let meals = [];
 let cart = [];
-
+let mealStack = [];
+let burgerCounter = 0;
+let cokeCounter = 0;
+let friesCounter = 0;
 let billForRegularItems = [];
-let billForMeals = [];
+let arrayForMeals = [];
 
 //fetching products from json file
 async function fetchProducts() {
   try {
     const results = await fetch("products.json");
     const data = await results.json();
+
     products = data.filter((item) => item.category !== "Meal");
     meals = data.filter((item) => item.category === "Meal");
+
     console.log(products);
     console.log(meals);
+    //storing meals in localstorage
+    window.localStorage.setItem("meals", JSON.stringify(meals));
   } catch (error) {
     throw new Error("result not found");
   }
 }
-
 //displaying the products
 async function display() {
   await fetchProducts();
-  addProducts("All", "");
+  addProducts("All");
 }
+
+console.log(`meals are ${meals}`);
 
 //display only when doucment is loaded
 document.addEventListener("DOMContentLoaded", display);
@@ -135,11 +143,12 @@ function addToCart(productData) {
   let { id, type } = productData;
   const quantity = document.getElementById(`quantity${id}`).value;
   let cartItem;
+
   if (type === "Meal") {
     const meal = meals.find((p) => p.id === id);
 
     const productsComboFromMeal = meal.products;
-    billForMeals.push(productsComboFromMeal);
+    arrayForMeals.push(productsComboFromMeal);
 
     // console.log(productsComboFromMeal);
 
@@ -153,123 +162,46 @@ function addToCart(productData) {
     const product = products.find((p) => p.id === id);
 
     billForRegularItems.push(product.id);
+    if (productData.category === "Burger") {
+      burgerCounter += parseInt(quantity);
+    } else if (productData.category === "Coke") {
+      cokeCounter += parseInt(quantity);
+    } else if (productData.category === "Fries") {
+      friesCounter += parseInt(quantity);
+    }
 
     cartItem = {
       id: product.id,
       name: product.name,
       price: product.price,
+      category: product.category,
       quantity: parseInt(quantity),
     };
+  }
+  // Retrieve the cart data from local storage
+  let cartItemsFromLocalStorage = window.localStorage.getItem("cart");
+
+  // Check if the cart data is not null or empty
+  if (cartItemsFromLocalStorage) {
+    try {
+      cart = JSON.parse(cartItemsFromLocalStorage);
+    } catch (error) {
+      console.error("error occured:", error);
+      cart = [];
+    }
+  } else {
+    cart = [];
   }
 
   cart.push(cartItem);
   alert("Item Added to the Cart");
-  updateCart();
-  document.querySelector("#delete-btn").classList.remove("hidden");
-}
 
-//update cart items
-function updateCart() {
-  const cartList = document.getElementById("cart-list");
-  cartList.innerHTML = "";
+  //setting cart in local storage
+  window.localStorage.setItem("cart", JSON.stringify(cart));
 
-  cart.forEach((item) => {
-    const listItem = document.createElement("li");
-    const text = document.createTextNode(
-      `${item.quantity} - ${item.name} = ${item.price * item.quantity} ₹`
-    );
-    listItem.appendChild(text);
-
-    cartList.appendChild(listItem);
-  });
-}
-
-//remove checkout after generating bill
-function checkout() {
-  document.getElementById("checkout").classList.remove("hidden");
-}
-
-document.querySelector("#checkout-btn").addEventListener("click", checkout);
-
-function getBill() {
-  const name = document.getElementById("name").value;
-  const email = document.getElementById("email").value;
-
-  const regularBill = calculateRegularBill();
-  const discountedBill = calculateDiscountedBill();
-
-  // Display bills
-  document.getElementById("regular-bill").innerHTML = `
-    <h3>Regular Bill for ${name} and ${email}</h3>
-    ${regularBill}`;
-  document.getElementById("discounted-bill").innerHTML = `
-    <h3>Discounted Bill for ${name} and ${email}</h3>
-    ${discountedBill}`;
-
-  document.getElementById("checkout").classList.add("hidden");
-  document.getElementById("bill").classList.remove("hidden");
-
-  // Clear the cart
-  cart = [];
-  updateCart();
-}
-
-document.getElementById("generate-bill-btn").addEventListener("click", getBill);
-
-//calculate regular bill
-function calculateRegularBill() {
-  let total = 0;
-  cart.forEach((item) => {
-    total += item.price * item.quantity;
-  });
-  return `Total: $${total}`;
-}
-
-//getMealPriceFromComboProducts
-function getMealPriceFromComboProducts(arrOfProducts) {
-  let price = 0;
-
-  meals.filter((element) => {
-    if (
-      element.products[0] === arrOfProducts[0] &&
-      element.products[1] === arrOfProducts[1]
-    ) {
-      price = element.price;
-      return price;
-    }
-  });
-  return price;
-}
-let mealsProductsArr = [];
-//calculate discounted bill
-function calculateDiscountedBill() {
-  console.log(billForRegularItems);
-  let total = 0;
-  let price = 0;
-  let cartQuantity = 0;
-
-  meals.forEach((meal) => {
-    mealsProductsArr.push(meal.products);
-  });
-  // console.log(mealsProductsArr);
-
-  for (let i = 0; i < mealsProductsArr.length - 1; i++) {
-    for (let j = 0; j < billForRegularItems.length; j++) {
-      if (
-        billForRegularItems[i] === mealsProductsArr[j][i] &&
-        billForRegularItems[i + 1] === mealsProductsArr[j][i + 1]
-      ) {
-        price = getMealPriceFromComboProducts(mealsProductsArr[j]);
-      }
-    }
-  }
-  console.log(price);
-  cart.forEach((item) => {
-    cartQuantity += item.quantity;
-  });
-
-  total += price;
-  return `Total: $${total}`;
+  let counterArray = [burgerCounter, cokeCounter, friesCounter];
+  window.localStorage.setItem("counterArray", JSON.stringify(counterArray));
+  // document.querySelector("#delete-btn").classList.remove("hidden");
 }
 
 addProducts();
