@@ -1,4 +1,5 @@
-let cart = JSON.parse(window.localStorage.getItem("cart")) || [];
+let cart = JSON.parse(window.localStorage.getItem("cart"));
+
 let [burgerCounter, cokeCounter, friesCounter] = JSON.parse(
   window.localStorage.getItem("counterArray")
 ) || [0, 0, 0];
@@ -10,11 +11,9 @@ console.log(`coke counter =${cokeCounter}`);
 console.log(`fries counter =${friesCounter}`);
 
 let finalAmount = 0;
-if (cart.length === 0) {
-  alert("your cart is empty plz add items");
-}
+
 console.log(cart);
-let meals = JSON.parse(window.localStorage.getItem("meals")) || [];
+let meals = JSON.parse(window.localStorage.getItem("meals"));
 console.log(meals);
 
 document
@@ -65,7 +64,7 @@ function getBill() {
 document.querySelector("#generate-bill-btn").addEventListener("click", getBill);
 
 function goToHomePage() {
-  displayRazorPay(finalAmount);
+  // displayRazorPay(finalAmount);
   document.getElementById("bill").classList.add("hidden");
   const homeBtn = document.querySelector("#checkout-btn");
   homeBtn.innerText = `Eat More Burgers`;
@@ -79,47 +78,80 @@ function goToHomePage() {
 function calculateRegularBill() {
   let total = 0;
   cart.forEach((item) => {
+    console.log(item);
     total += item.price * item.quantity;
   });
 
-  cart = [];
-  window.localStorage.setItem("cart", cart);
   return total;
 }
 
 function calculateDiscountedBill(regularBill) {
-  let vegMealDiscount = 150;
-  let nonvegMealDiscount = 200;
+  let totalDiscount = 0;
 
-  finalAmount = regularBill - 100;
-  return `Total: ${regularBill - 100}`;
-}
+  for (let meal of meals) {
+    let productIds = meal.products;
+    console.log("product ids" + productIds);
+    let mealCount = getMealCount(productIds);
+    console.log(`mela cout==${mealCount}`);
 
-function checkInMeals(item1, item2) {
-  console.log(`item1 is ${item1.id} and item2 is ${item2.id}`);
-  let foundAndPrice = [false, 0];
-
-  let meal;
-  for (let i = 0; i < mealStack.length; i++) {
-    let productsArrInMeals = mealStack[i].products;
-    console.log(productsArrInMeals);
-    if (
-      productsArrInMeals.includes(item1.id) &&
-      productsArrInMeals.includes(item2.id)
-    ) {
-      meal = mealStack[i];
-      break;
+    if (mealCount > 0) {
+      totalDiscount = regularBill - 150 * mealCount;
+      console.log(`total disc=${totalDiscount}`);
     }
   }
-  console.log(meal);
 
-  if (meal) {
-    console.log(meal);
-    foundAndPrice[0] = true;
-    foundAndPrice[1] = meal.price;
+  if (totalDiscount === 0) {
+    cart.forEach((item) => {
+      totalDiscount += item.price * item.quantity;
+    });
   }
-  return foundAndPrice;
+
+  return `Discounted Total: ${totalDiscount}`;
 }
+
+function getMealCount(productIds) {
+  let count = Infinity;
+
+  for (let id of productIds) {
+    let item = cart.find((product) => product.id === id);
+    console.log(`item is ${item}`);
+    if (!item) {
+      count = 0;
+      break;
+    }
+
+    count = Math.min(count, item.quantity);
+    console.log(`count=${count}`);
+  }
+
+  return count;
+}
+
+// function checkInMeals(item1, item2) {
+//   console.log(`item1 is ${item1.id} and item2 is ${item2.id}`);
+//   let foundAndPrice = [false, 0];
+
+//   let meal;
+//   for (let i = 0; i < mealStack.length; i++) {
+//     let productsArrInMeals = mealStack[i].products;
+//     console.log(productsArrInMeals);
+//     if (
+//       productsArrInMeals.includes(item1.id) &&
+//       productsArrInMeals.includes(item2.id)
+//     ) {
+//       meal = mealStack[i];
+//       break;
+//     }
+//   }
+//   console.log(meal);
+
+//   if (meal) {
+//     console.log(meal);
+//     foundAndPrice[0] = true;
+//     foundAndPrice[1] = meal.price;
+//   }
+//   return foundAndPrice;
+// }
 
 //increase
 function increaseQuantity(itemId) {
@@ -143,10 +175,10 @@ function increaseQuantity(itemId) {
 }
 
 //decrease
-function decreaseQuantity(itemId) {
+function decreaseQuantity(itemId, count = 1) {
   const item = cart.find((item) => item.id === itemId);
   if (item && item.quantity > 1) {
-    item.quantity -= 1;
+    item.quantity -= count;
     if (item.category === "Burger") {
       burgerCounter--;
     } else if (item.category === "Coke") {

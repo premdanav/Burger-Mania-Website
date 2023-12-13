@@ -5,8 +5,6 @@ let mealStack = [];
 let burgerCounter = 0;
 let cokeCounter = 0;
 let friesCounter = 0;
-let billForRegularItems = [];
-let arrayForMeals = [];
 
 //fetching products from json file
 async function fetchProducts() {
@@ -148,7 +146,6 @@ function addToCart(productData) {
     const meal = meals.find((p) => p.id === id);
 
     const productsComboFromMeal = meal.products;
-    arrayForMeals.push(productsComboFromMeal);
 
     // console.log(productsComboFromMeal);
 
@@ -161,7 +158,6 @@ function addToCart(productData) {
   } else {
     const product = products.find((p) => p.id === id);
 
-    billForRegularItems.push(product.id);
     if (productData.category === "Burger") {
       burgerCounter += parseInt(quantity);
     } else if (productData.category === "Coke") {
@@ -201,7 +197,6 @@ function addToCart(productData) {
 
   let counterArray = [burgerCounter, cokeCounter, friesCounter];
   window.localStorage.setItem("counterArray", JSON.stringify(counterArray));
-  // document.querySelector("#delete-btn").classList.remove("hidden");
 }
 
 addProducts();
