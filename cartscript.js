@@ -45,27 +45,49 @@ function getBill() {
   console.log(`discounted bill ${discountedBill}`);
 
   document.getElementById("regular-bill").innerHTML = `
-        <h3>Regular Bill for ${name} and ${email}</h3>Total Bill : 
-        ${regularBill}`;
+        <h3>Regular Bill for ${name} and ${email}</h3>Total Bill :
+        ₹ ${regularBill}`;
 
   //no discount
-  if (regularBill === discountedBill) {
-    document.getElementById("discounted-bill").innerHTML = `
-        <h3>Discounted Bill for ${name} and ${email}</h3>
-        ${discountedBill}`;
+  if (regularBill == discountedBill.replace("Discounted Total: ₹ ", "")) {
+    document.getElementById("discounted-bill").innerHTML = regularHTML(
+      name,
+      email,
+      discountedBill
+    );
+  } else {
+    //discount
+    console.log("discount");
+    document.getElementById("discounted-bill").innerHTML = ``;
+    document.getElementById("discounted-bill").innerHTML = discountHTML(
+      name,
+      email,
+      discountedBill
+    );
   }
-
-  //discount
-  document.getElementById("discounted-bill").innerHTML = `
-        <h2>Congrats You Got Discount<h2>
-        <h3>Discounted Bill for ${name} and ${email}</h3>
-        ${discountedBill}`;
 
   document.getElementById("checkout").classList.add("hidden");
   document.getElementById("bill").classList.remove("hidden");
 
   cart = [];
   updateCart();
+}
+
+//regulat bill html
+
+function regularHTML(name, email, discountedBill) {
+  return `
+  <h2>Congrats You Got No Discount<h2>
+  <h3>Discounted Bill for ${name} and ${email}</h3>
+${discountedBill}`;
+}
+
+//discount html
+function discountHTML(name, email, discountedBill) {
+  return `
+  <h2>Congrats You Got Discount For Selecting Meal<h2>
+  <h3>Discounted Bill for ${name} and ${email}</h3>
+${discountedBill}`;
 }
 
 // home page function
@@ -104,7 +126,7 @@ function calculateDiscountedBill(regularBill) {
 
     if (mealCount > 0) {
       totalDiscount = regularBill - 50 * mealCount;
-      console.log(`Total discount = ${totalDiscount}`);
+      console.log(`Total discount =  ${totalDiscount}`);
     }
   }
 
@@ -115,7 +137,7 @@ function calculateDiscountedBill(regularBill) {
   }
 
   finalAmount = totalDiscount;
-  return `Discounted Total: ${totalDiscount}`;
+  return `Discounted Total: ₹ ${totalDiscount}`;
 }
 
 // count of meals we occured
