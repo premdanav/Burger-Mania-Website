@@ -91,7 +91,7 @@
   {
     "id": 12,
     "name": "Chicken Burger And Classic Fries Meal",
-    "price": 450,
+    "price": 350,
     "category": "Meal",
     "type": "Meal",
     "products": [4, 7],
@@ -109,7 +109,7 @@
   {
     "id": 14,
     "name": "Veggie Delight Burger And Coke Meal",
-    "price": 280,
+    "price": 300,
     "category": "Meal",
     "type": "Meal",
     "products": [3, 9],

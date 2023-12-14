@@ -32,10 +32,6 @@ function delteLastItemFromCart() {
 //checkout
 function checkout() {
   document.getElementById("checkout").classList.remove("hidden");
-  if (cart.length === 0) {
-    alert("Cart is empty");
-    window.location.href = "index.html";
-  }
 }
 
 //getbill
@@ -107,7 +103,7 @@ function calculateDiscountedBill(regularBill) {
     console.log(`Meal count == ${mealCount}`);
 
     if (mealCount > 0) {
-      totalDiscount = regularBill - 150 * mealCount;
+      totalDiscount = regularBill - 50 * mealCount;
       console.log(`Total discount = ${totalDiscount}`);
     }
   }
@@ -226,7 +222,7 @@ const displayRazorPay = async (amount) => {
       key: "rzp_test_hRHaEIhkpd6odG",
       currency: "INR",
       amount: amount * 100,
-      name: "Market",
+      name: "Burger Shop",
       description: "Congratulations",
       handler: async function (response) {
         // Payment successful
