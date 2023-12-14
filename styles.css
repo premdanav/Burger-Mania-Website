@@ -40,7 +40,7 @@ nav li a:hover {
 }
 
 .container {
-  max-width: 1200px;
+  max-width: 2000px;
   margin: 20px auto;
   padding: 20px;
   border-radius: 10%;
@@ -49,6 +49,7 @@ nav li a:hover {
 .products-container {
   display: flex;
   flex-wrap: wrap;
+  margin-left: 4%;
 }
 
 .product-card {
@@ -58,6 +59,7 @@ nav li a:hover {
   margin: 10px;
   width: 200px;
   background-color: lightslategray;
+  height: 444px;
 }
 
 .product-image {
@@ -68,10 +70,11 @@ nav li a:hover {
 
 .product-details {
   padding: 10px;
+  height: 54%;
 }
 
 .cart-icon {
-  float: right;
+  float: left;
   font-size: 16px;
   cursor: pointer;
   background-color: #333;
@@ -79,6 +82,9 @@ nav li a:hover {
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
+  /* display: flex; */
+  align-items: center;
+  margin-left: 23%;
 }
 
 #cart {
@@ -112,4 +118,25 @@ nav li a:hover {
 
 .hidden {
   display: none;
+}
+
+.browser p {
+  margin: 4px;
+  font-size: 90%;
+}
+
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: rgb(107, 107, 222);
+  color: white;
+}
+
+#c-filter {
+  width: 7%;
+}
+
+#search-bar {
+  width: 25%;
+  margin-top: 10;
 }

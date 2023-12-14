@@ -53,8 +53,13 @@ function createCardHtml(product) {
           <option value="8">8</option>
           <option value="9">9</option>
       </select>
-      <button class="cart-icon" id='cart-btn' data-product-id="${id}">Add to Cart</button>
-    </div>`;
+      </div>
+      <div class="ATCB">
+        <button class="cart-icon" id='cart-btn' data-product-id="${id}">Add to Cart</button>
+        <br><br><br><br>
+      </div>   
+      <br>
+      `;
 }
 
 // Create cart
