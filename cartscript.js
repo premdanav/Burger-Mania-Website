@@ -92,7 +92,7 @@ ${discountedBill}`;
 
 // home page function
 function goToHomePage() {
-  // displayRazorPay(finalAmount);
+  displayRazorPay(finalAmount);
   document.getElementById("bill").classList.add("hidden");
   const homeBtn = document.querySelector("#checkout-btn");
   homeBtn.innerText = `Eat More Burgers`;
