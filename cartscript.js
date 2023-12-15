@@ -177,38 +177,96 @@ function decreaseQuantity(itemId, count = 1) {
   }
 }
 
-// update the cart
+// // update the cart
+// function updateCart() {
+//   const cartList = document.getElementById("cart-list");
+//   cartList.innerHTML = "";
+
+//   cart.forEach((item) => {
+//     const listItem = document.createElement("li");
+
+//     //increase button
+//     const increaseButton = document.createElement("button");
+//     increaseButton.innerText = "+";
+//     increaseButton.addEventListener("click", () => increaseQuantity(item.id));
+
+//     //decrease button
+//     const decreaseButton = document.createElement("button");
+//     decreaseButton.innerText = "-";
+//     decreaseButton.addEventListener("click", () => decreaseQuantity(item.id));
+
+//     const text = document.createTextNode(
+//       `${item.quantity} - ${item.name} = ${item.price * item.quantity} ₹`
+//     );
+
+//     const br = document.createElement("br");
+//     br.innerHTML = "<br/>";
+
+//     listItem.appendChild(text);
+//     cartList.appendChild(listItem);
+//     cartList.appendChild(br);
+//     listItem.appendChild(increaseButton);
+//     listItem.appendChild(decreaseButton);
+//   });
+
+//   window.localStorage.setItem("cart", JSON.stringify(cart));
+// }
 function updateCart() {
-  const cartList = document.getElementById("cart-list");
-  cartList.innerHTML = "";
+  const cartTable = document.getElementById("cart-list");
+  cartTable.innerHTML = ""; // Clear the table content
 
+  // Create table header
+  const headerRow = document.createElement("tr");
+  const headers = ["Item Name", "Quantity", "Decrease", "Increase", "Price"];
+  headers.forEach((headerText) => {
+    const th = document.createElement("th");
+    th.textContent = headerText;
+    headerRow.appendChild(th);
+  });
+  cartTable.appendChild(headerRow);
+
+  // Populate table with cart items
   cart.forEach((item) => {
-    const listItem = document.createElement("li");
+    const row = document.createElement("tr");
 
-    //increase button
-    const increaseButton = document.createElement("button");
-    increaseButton.innerText = "+";
-    increaseButton.addEventListener("click", () => increaseQuantity(item.id));
+    // Item Name
+    const itemNameCell = document.createElement("td");
+    itemNameCell.textContent = item.name;
 
-    //decrease button
+    // Quantity
+    const quantityCell = document.createElement("td");
+    quantityCell.textContent = item.quantity;
+
+    // Decrease Button
+    const decreaseButtonCell = document.createElement("td");
     const decreaseButton = document.createElement("button");
     decreaseButton.innerText = "-";
     decreaseButton.addEventListener("click", () => decreaseQuantity(item.id));
+    decreaseButtonCell.appendChild(decreaseButton);
 
-    const text = document.createTextNode(
-      `${item.quantity} - ${item.name} = ${item.price * item.quantity} ₹`
-    );
+    // Increase Button
+    const increaseButtonCell = document.createElement("td");
+    const increaseButton = document.createElement("button");
+    increaseButton.innerText = "+";
+    increaseButton.addEventListener("click", () => increaseQuantity(item.id));
+    increaseButtonCell.appendChild(increaseButton);
 
-    const br = document.createElement("br");
-    br.innerHTML = "<br/>";
+    // Price
+    const priceCell = document.createElement("td");
+    priceCell.textContent = `${item.price * item.quantity} ₹`;
 
-    listItem.appendChild(text);
-    cartList.appendChild(listItem);
-    cartList.appendChild(br);
-    listItem.appendChild(increaseButton);
-    listItem.appendChild(decreaseButton);
+    // Append cells to the row
+    row.appendChild(itemNameCell);
+    row.appendChild(quantityCell);
+    row.appendChild(decreaseButtonCell);
+    row.appendChild(increaseButtonCell);
+    row.appendChild(priceCell);
+
+    // Append the row to the table
+    cartTable.appendChild(row);
   });
 
+  // Save cart to local storage
   window.localStorage.setItem("cart", JSON.stringify(cart));
 }
 

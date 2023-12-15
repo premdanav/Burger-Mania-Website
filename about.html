@@ -7,7 +7,7 @@ body {
   display:flex;
   flex-direction:column;
   align-items:center center;
-  
+  background-color: rgb(4, 60, 76);
 }
 
 html {
@@ -35,7 +35,7 @@ html {
 }
 
 .about-section {
-  padding: 50px;
+  padding: 40px;
   text-align: center;
   background-color: #b908b0;
   color: white;
@@ -51,6 +51,10 @@ html {
   display: table;
 }
 
+#name{
+  color: white;
+}
+
 .title {
   color: grey;
 }
@@ -60,8 +64,8 @@ html {
   outline: 0;
   display: inline-block;
   padding: 8px;
-  color: white;
-  background-color: #000;
+  color: rgb(1, 0, 0);
+  background-color: white;
   text-align: center;
   cursor: pointer;
   width: 100%;
@@ -77,10 +81,25 @@ html {
     display: block;
   }
 }
+
+
+.browser p {
+  margin: 4px;
+  font-size: 90%;
+}
+
+footer {
+  text-align: center;
+  padding: 3px;
+  background-color: rgb(107, 107, 222);
+  color: white;
+}
+
 </style>
+
 </head>
 <body>
-
+<div>
 <div class="about-section">
   <h1>About Us Page</h1>
   <p>Welcome to Burger Mania, where passion meets flavor, and every bite is a journey into culinary delight! Established in 2023, Burger Mania has been dedicated to serving the finest, mouth-watering burgers that captivate your taste buds and leave you craving for more.</p>
@@ -92,7 +111,7 @@ html {
     <div class="card">
       <img src="./prempic.png" alt="Prem" style="width:40% padding-left:fit-content ">
       <div class="container">
-        <h2>Premkumar Danav</h2>
+        <h2 id="name">Premkumar Danav</h2>
         <p class="title">CEO & Founder</p>
         <p>Food Lover and Tech Enthusiast</p>
         <p>premdanav@gmail.com</p>
@@ -100,8 +119,14 @@ html {
       </div>
     </div>
   </div>
-
+</div>
+  <br><br><br><br>
   
+  <footer>
+    <p>Author: Premkumar Danav<br>
+    <a href="mailto:premdanav@gmail.com">premdanav@gmail.com</a></p>
+  </footer>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>

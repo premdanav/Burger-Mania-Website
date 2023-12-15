@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "Paneer Tikki Burger",
+    "name": "Paneer Tikki  Burger",
     "price": 200,
     "category": "Burger",
     "type": "Veg",
@@ -25,7 +25,7 @@
   },
   {
     "id": 4,
-    "name": "Chicken Burger",
+    "name": "Chicken Big Burger",
     "price": 300,
     "category": "Burger",
     "type": "Non-veg",
@@ -41,7 +41,7 @@
   },
   {
     "id": 6,
-    "name": "Mutton Burger",
+    "name": "Mutton Patty Burger",
     "price": 450,
     "category": "Burger",
     "type": "Non-veg",
@@ -49,7 +49,7 @@
   },
   {
     "id": 7,
-    "name": "Classic Fries",
+    "name": "Classic French  Fries",
     "price": 100,
     "category": "Fries",
     "type": "Fries",
@@ -57,7 +57,7 @@
   },
   {
     "id": 8,
-    "name": "Cheese Fries",
+    "name": "Cheese French Fries",
     "price": 200,
     "category": "Fries",
     "type": "Fries",
@@ -65,7 +65,7 @@
   },
   {
     "id": 9,
-    "name": "Regular Coke",
+    "name": "Regular Coca Cola",
     "price": 100,
     "category": "Coke",
     "type": "Coke",
@@ -73,7 +73,7 @@
   },
   {
     "id": 10,
-    "name": "Diet Coke",
+    "name": "Diet Coca Cola",
     "price": 120,
     "category": "Coke",
     "type": "Coke",
@@ -135,7 +135,7 @@
   },
   {
     "id": 17,
-    "name": "Hot Veg BUrger",
+    "name": "Hot Vegggies Burger",
     "price": 300,
     "category": "Burger",
     "type": "Veg",
