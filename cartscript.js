@@ -1,8 +1,11 @@
 let cart = JSON.parse(window.localStorage.getItem("cart"));
 let finalAmount = 0;
 let meals = JSON.parse(window.localStorage.getItem("meals"));
-document.querySelector("#delete-btn").classList.remove("hidden");
 
+document.querySelector("#delete-btn").classList.remove("hidden");
+let prevOrdersCart = JSON.parse(window.localStorage.getItem("prev-orders"));
+
+const mealSet = new Set();
 // listener for delete-btn
 document
   .querySelector("#delete-btn")
@@ -69,6 +72,8 @@ function getBill() {
   document.getElementById("checkout").classList.add("hidden");
   document.getElementById("bill").classList.remove("hidden");
 
+  cart.forEach((item) => prevOrdersCart.push(item));
+  window.localStorage.setItem("prev-orders", JSON.stringify(prevOrdersCart));
   cart = [];
   updateCart();
 }
@@ -77,22 +82,27 @@ function getBill() {
 
 function regularHTML(name, email, discountedBill) {
   return `
-  <h2>Congrats You Got No Discount<h2>
+  <h2>Sorry, You Got No Discount<h2>
   <h3>Discounted Bill for ${name} and ${email}</h3>
 ${discountedBill}`;
 }
 
 //discount html
-function discountHTML(name, email, discountedBill) {
+function discountHTML(inputName, email, discountedBill) {
+  const selectMealSet = [...mealSet].filter((meal) => meal.includes("and"));
   return `
   <h2>Congrats You Got Discount For Selecting Meal<h2>
-  <h3>Discounted Bill for ${name} and ${email}</h3>
+  <div>
+   <ul>
+   ${selectMealSet.map((meal) => `<li>${meal}</li>`)}  </ul>
+   </div>
+  <h3>Discounted Bill for ${inputName} and ${email}</h3>
 ${discountedBill}`;
 }
 
 // home page function
 function goToHomePage() {
-  displayRazorPay(finalAmount);
+  // displayRazorPay(finalAmount);
   document.getElementById("bill").classList.add("hidden");
   const homeBtn = document.querySelector("#checkout-btn");
   homeBtn.innerText = `Eat More Burgers`;
@@ -125,7 +135,7 @@ function calculateDiscountedBill(regularBill) {
     console.log(`Meal count == ${mealCount}`);
 
     if (mealCount > 0) {
-      totalDiscount = regularBill - 50 * mealCount;
+      totalDiscount = regularBill - 100 * mealCount;
       console.log(`Total discount =  ${totalDiscount}`);
     }
   }
@@ -143,11 +153,14 @@ function calculateDiscountedBill(regularBill) {
 // count of meals we occured
 function getMealCount(productIds) {
   let count = Infinity;
+  let mealNames = [];
 
   for (let id of productIds) {
     let item = cart.find((product) => product.id === id);
-    console.log(`Item is ${item}`);
-    if (!item) {
+    if (item) {
+      mealSet.add(item.name);
+      mealNames.push(item.name);
+    } else {
       count = 0;
       break;
     }
@@ -155,7 +168,8 @@ function getMealCount(productIds) {
     count = Math.min(count, item.quantity);
     console.log(`Count = ${count}`);
   }
-
+  mealSet.add(mealNames.join(" and "));
+  console.log(mealSet);
   return count;
 }
 
@@ -171,53 +185,26 @@ function increaseQuantity(itemId) {
 // decrease quantity
 function decreaseQuantity(itemId, count = 1) {
   const item = cart.find((item) => item.id === itemId);
+  if (item && item.quantity === 1) {
+    let index = cart.findIndex((item) => item.id === itemId);
+    if (confirm("Do you really want to delete?")) {
+      cart.splice(index, 1);
+    }
+    updateCart();
+  }
   if (item && item.quantity > 1) {
     item.quantity -= count;
     updateCart();
   }
 }
 
-// // update the cart
-// function updateCart() {
-//   const cartList = document.getElementById("cart-list");
-//   cartList.innerHTML = "";
+function createCartTable() {
+  const cartTable = document.createElement("table");
+  cartTable.id = "cart-list";
 
-//   cart.forEach((item) => {
-//     const listItem = document.createElement("li");
-
-//     //increase button
-//     const increaseButton = document.createElement("button");
-//     increaseButton.innerText = "+";
-//     increaseButton.addEventListener("click", () => increaseQuantity(item.id));
-
-//     //decrease button
-//     const decreaseButton = document.createElement("button");
-//     decreaseButton.innerText = "-";
-//     decreaseButton.addEventListener("click", () => decreaseQuantity(item.id));
-
-//     const text = document.createTextNode(
-//       `${item.quantity} - ${item.name} = ${item.price * item.quantity} ₹`
-//     );
-
-//     const br = document.createElement("br");
-//     br.innerHTML = "<br/>";
-
-//     listItem.appendChild(text);
-//     cartList.appendChild(listItem);
-//     cartList.appendChild(br);
-//     listItem.appendChild(increaseButton);
-//     listItem.appendChild(decreaseButton);
-//   });
-
-//   window.localStorage.setItem("cart", JSON.stringify(cart));
-// }
-function updateCart() {
-  const cartTable = document.getElementById("cart-list");
-  cartTable.innerHTML = ""; // Clear the table content
-
-  // Create table header
   const headerRow = document.createElement("tr");
-  const headers = ["Item Name", "Quantity", "Decrease", "Increase", "Price"];
+  const headers = ["Item Name", "Quantity", "Remove", "Add", "Price"];
+
   headers.forEach((headerText) => {
     const th = document.createElement("th");
     th.textContent = headerText;
@@ -225,7 +212,13 @@ function updateCart() {
   });
   cartTable.appendChild(headerRow);
 
-  // Populate table with cart items
+  return cartTable;
+}
+
+function updateCart() {
+  const cartTable = createCartTable();
+
+  // adding item to the  table with cart items
   cart.forEach((item) => {
     const row = document.createElement("tr");
 
@@ -240,6 +233,7 @@ function updateCart() {
     // Decrease Button
     const decreaseButtonCell = document.createElement("td");
     const decreaseButton = document.createElement("button");
+    decreaseButton.classList.add("remove-btn");
     decreaseButton.innerText = "-";
     decreaseButton.addEventListener("click", () => decreaseQuantity(item.id));
     decreaseButtonCell.appendChild(decreaseButton);
@@ -247,6 +241,7 @@ function updateCart() {
     // Increase Button
     const increaseButtonCell = document.createElement("td");
     const increaseButton = document.createElement("button");
+    increaseButton.classList.add("add-btn");
     increaseButton.innerText = "+";
     increaseButton.addEventListener("click", () => increaseQuantity(item.id));
     increaseButtonCell.appendChild(increaseButton);
@@ -255,19 +250,19 @@ function updateCart() {
     const priceCell = document.createElement("td");
     priceCell.textContent = `${item.price * item.quantity} ₹`;
 
-    // Append cells to the row
     row.appendChild(itemNameCell);
     row.appendChild(quantityCell);
     row.appendChild(decreaseButtonCell);
     row.appendChild(increaseButtonCell);
     row.appendChild(priceCell);
 
-    // Append the row to the table
     cartTable.appendChild(row);
   });
 
-  // Save cart to local storage
   window.localStorage.setItem("cart", JSON.stringify(cart));
+
+  const existingCartTable = document.getElementById("cart-list");
+  existingCartTable.replaceWith(cartTable);
 }
 
 updateCart();

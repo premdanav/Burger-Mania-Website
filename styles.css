@@ -140,3 +140,62 @@ footer {
   width: 25%;
   margin-top: 10;
 }
+
+#cart-list {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+#cart-list th,
+#cart-list td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+  width: 20%;
+}
+
+#cart-list th {
+  background-color: #6d6a6a;
+}
+
+#cart-list-inner {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#cart-list-inner th,
+#cart-list-inner td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+#cart-list button {
+  cursor: pointer;
+  background-color: rgb(94, 136, 94);
+  color: black;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+#cart-list button.remove-btn:hover {
+  cursor: pointer;
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+#cart-list button.add-btn:hover {
+  cursor: pointer;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+}

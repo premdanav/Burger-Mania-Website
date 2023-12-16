@@ -70,7 +70,7 @@ function createCard(product) {
 
   // Add event listener to the button
   const button = card.querySelector(".cart-icon");
-  button.addEventListener("click", () => addToCart(product));
+  button.addEventListener("click", (e) => addToCart(product, e));
 
   return card;
 }
@@ -151,6 +151,7 @@ function addToCart(productData) {
       id: meal.id,
       name: meal.name,
       price: meal.price,
+      category: meal.category,
       quantity: parseInt(quantity),
     };
   } else {
@@ -180,8 +181,18 @@ function addToCart(productData) {
     cart = [];
   }
 
-  cart.push(cartItem);
-  alert("Item Added to the Cart");
+  let itemFound = false;
+  cart.forEach((item) => {
+    if (item.id === cartItem.id) {
+      item.quantity += cartItem.quantity;
+      itemFound = true;
+      return;
+    }
+  });
+
+  if (!itemFound) {
+    cart.push(cartItem);
+  }
 
   // Setting cart in local storage
   window.localStorage.setItem("cart", JSON.stringify(cart));
