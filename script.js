@@ -138,7 +138,7 @@ document
   .addEventListener("change", onCategoryChange);
 
 // Add to cart
-function addToCart(productData) {
+function addToCart(productData, e) {
   console.log(productData);
   let { id, type } = productData;
   const quantity = document.getElementById(`quantity${id}`).value;
@@ -193,6 +193,17 @@ function addToCart(productData) {
   if (!itemFound) {
     cart.push(cartItem);
   }
+
+  const addButton = e.target;
+  addButton.disabled = true;
+  addButton.innerText = "Item Added";
+  addButton.style.backgroundColor = "green";
+
+  setTimeout(() => {
+    addButton.disabled = false;
+    addButton.innerText = "Add to Cart";
+    addButton.style.backgroundColor = "";
+  }, 500);
 
   // Setting cart in local storage
   window.localStorage.setItem("cart", JSON.stringify(cart));
