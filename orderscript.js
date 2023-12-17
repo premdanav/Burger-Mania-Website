@@ -19,7 +19,6 @@ function createCartTable(prevOrdersHistoryCart) {
   prevOrdersHistoryCart.forEach((item) => {
     const row = table.insertRow();
 
-    // Iterate over each property of the item
     Object.values(item).forEach((value) => {
       const cell = row.insertCell();
       cell.textContent = value;

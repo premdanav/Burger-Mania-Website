@@ -74,7 +74,7 @@ function getBill() {
 
   cart.forEach((item) => prevOrdersCart.push(item));
   window.localStorage.setItem("prev-orders", JSON.stringify(prevOrdersCart));
-  cart = [];
+  cart.splice(0);
   updateCart();
 }
 
