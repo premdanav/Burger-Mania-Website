@@ -35,12 +35,16 @@ function delteLastItemFromCart() {
 //checkout
 function checkout() {
   document.getElementById("checkout").classList.remove("hidden");
+  if (cart.length === 0) {
+    window.location.href = "index.html";
+  }
 }
 
 //getbill
 function getBill() {
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
+  prevOrdersCart = JSON.parse(window.localStorage.getItem("prev-orders")) || [];
 
   const regularBill = calculateRegularBill();
   console.log(`regular bill ${regularBill}`);
